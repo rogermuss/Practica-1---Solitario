@@ -56,7 +56,7 @@ public abstract class Carta implements Comparable<Carta> {
             return "@";
         }
         return switch (valor) {
-            case 14 -> "A" + palo.getFigura();
+            case 1 -> "A" + palo.getFigura();
             case 11 -> "J"+ palo.getFigura();
             case 12 -> "Q" + palo.getFigura();
             case 13 -> "K" + palo.getFigura();

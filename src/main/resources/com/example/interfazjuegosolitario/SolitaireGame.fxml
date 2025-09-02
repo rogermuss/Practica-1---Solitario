@@ -52,12 +52,12 @@
       <VBox id="t5" fx:id="t5" fillWidth="false" layoutX="334.0" layoutY="159.0" prefHeight="94.0" prefWidth="64.0" style="-fx-background-color: rgba(0, 50, 0,);" />
       <VBox id="t6" fx:id="t6" fillWidth="false" layoutX="410.0" layoutY="159.0" prefHeight="94.0" prefWidth="64.0" style="-fx-background-color: rgba(0, 50, 0,);" />
       <VBox id="t7" fx:id="t7" fillWidth="false" layoutX="488.0" layoutY="159.0" prefHeight="94.0" prefWidth="64.0" style="-fx-background-color: rgba(0, 50, 0,);" />
-      <StackPane fx:id="pozo" layoutX="31.0" layoutY="42.0" prefHeight="94.0" prefWidth="64.0" style="-fx-background-color: rgba(0, 50, 0,);" />
+      <StackPane fx:id="pozo" layoutX="31.0" layoutY="42.0" onMouseClicked="#manejarClicPozo" prefHeight="94.0" prefWidth="64.0" style="-fx-background-color: rgba(0, 50, 0,);" />
       <StackPane fx:id="zonaDescarte" layoutX="146.0" layoutY="42.0" prefHeight="94.0" prefWidth="64.0" style="-fx-background-color: rgba(0, 50, 0,);" />
-      <StackPane fx:id="pozo1" layoutX="520.0" layoutY="42.0" prefHeight="94.0" prefWidth="64.0" style="-fx-background-color: rgba(0, 50, 0,);" />
-      <StackPane fx:id="pozo2" layoutX="594.0" layoutY="42.0" prefHeight="94.0" prefWidth="64.0" style="-fx-background-color: rgba(0, 50, 0,);" />
-      <StackPane fx:id="pozo3" layoutX="742.0" layoutY="42.0" prefHeight="94.0" prefWidth="64.0" style="-fx-background-color: rgba(0, 50, 0,);" />
-      <StackPane fx:id="pozo4" layoutX="667.0" layoutY="42.0" prefHeight="94.0" prefWidth="64.0" style="-fx-background-color: rgba(0, 50, 0,);" />
+      <VBox id="t7" fx:id="f1" fillWidth="false" layoutX="520.0" layoutY="42.0" prefHeight="94.0" prefWidth="64.0" style="-fx-background-color: rgba(0, 50, 0,);" />
+      <VBox id="t7" fx:id="f2" fillWidth="false" layoutX="598.0" layoutY="42.0" prefHeight="94.0" prefWidth="64.0" style="-fx-background-color: rgba(0, 50, 0,);" />
+      <VBox id="t7" fx:id="f3" fillWidth="false" layoutX="674.0" layoutY="42.0" prefHeight="94.0" prefWidth="64.0" style="-fx-background-color: rgba(0, 50, 0,);" />
+      <VBox id="t7" fx:id="f4" fillWidth="false" layoutX="747.0" layoutY="42.0" prefHeight="94.0" prefWidth="64.0" style="-fx-background-color: rgba(0, 50, 0,);" />
 
    </children>
 </AnchorPane>
