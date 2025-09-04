@@ -11,6 +11,7 @@ import java.io.IOException;
 
 
 public class SolitaireMenuController {
+
     @FXML
     private StackPane playCard;
 
@@ -36,15 +37,13 @@ public class SolitaireMenuController {
         }
     }
 
+    //Ayuda a gestionar los stage
     public void setManager(SolitaireManager manager) {
         this.manager = manager;
     }
 
-    @FXML
-    public void reiniciarClickEvents(){
-        setupClickEvents();
-    }
 
+    //Genero los click events de los botones del menu.
     public void setupClickEvents() {
         playCard.setOnMouseClicked(e -> {
             try {
@@ -68,6 +67,8 @@ public class SolitaireMenuController {
 
 
 
+    //Doy aspecto grafico de animacion al ingresar el mouse en el area de los
+    // stack de opciones y los regreso al diseño original al salir.
     private void setupHoverEffects() {
         // Efecto hover para la carta de jugar
         playCard.setOnMouseEntered(e -> {

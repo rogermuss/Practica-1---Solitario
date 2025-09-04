@@ -17,6 +17,7 @@ public class SolitaireManager {
         this.stage = stage;
     }
 
+    //Carga la escena creada para el menu
     public void iniciarEscenaMenu() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/interfaz" +
                 "juegosolitario/SolitaireMenu.fxml"));
@@ -30,6 +31,7 @@ public class SolitaireManager {
         stage.show();
     }
 
+    //Carga la escena del juego
     public void iniciarEscenaJuego() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/interfaz" +
                 "juegosolitario/SolitaireGame.fxml"));
