@@ -18,6 +18,7 @@ public class Solitaire extends Application {
         stage.setTitle("Solitario - Bienvenida");
         stage.setScene(scene);
         stage.show();
+        stage.resizableProperty().setValue(Boolean.FALSE);
 
         SolitaireManager manager = new SolitaireManager(stage);
 
