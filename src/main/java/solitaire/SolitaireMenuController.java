@@ -40,6 +40,11 @@ public class SolitaireMenuController {
         this.manager = manager;
     }
 
+    @FXML
+    public void reiniciarClickEvents(){
+        setupClickEvents();
+    }
+
     public void setupClickEvents() {
         playCard.setOnMouseClicked(e -> {
             try {

@@ -11,6 +11,8 @@ import java.io.IOException;
 public class SolitaireManager {
     private Stage stage;
 
+
+
     SolitaireManager(Stage stage) {
         this.stage = stage;
     }
@@ -20,6 +22,8 @@ public class SolitaireManager {
                 "juegosolitario/SolitaireMenu.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
 
+        SolitaireMenuController controller = fxmlLoader.getController();
+        controller.setManager(this); // <--- esto es clave
         stage.setFullScreen(false);
         stage.setTitle("Solitario - Bienvenida");
         stage.setScene(scene);

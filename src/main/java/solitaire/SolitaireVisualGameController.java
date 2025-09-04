@@ -2,14 +2,16 @@ package solitaire;
 
 import DeckOfCards.CartaInglesa;
 import DeckOfCards.Mazo;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.layout.Region;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,12 +19,13 @@ import java.util.HashSet;
 
 public class SolitaireVisualGameController {
     // Reemplazar estas variables de instancia
+    private SolitaireManager manager;
     private StackPane cartaSeleccionada = null;
     private ArrayList<StackPane> cartasSeleccionadas = new ArrayList<>(); // Para múltiples cartas
     private javafx.scene.Parent contenedorOrigen = null; // Cambiar de VBox a Parent
     private double offsetX, offsetY;
-    Mazo mazo = new Mazo();
-    ArrayList<StackPane> cartasGraficas = new ArrayList<>();
+    private Mazo mazo = new Mazo();
+    private ArrayList<StackPane> cartasGraficas = new ArrayList<>();
 
 
     // Foundations
@@ -40,6 +43,8 @@ public class SolitaireVisualGameController {
     @FXML VBox t6;
     @FXML VBox t7;
 
+    @FXML Button newGame;
+    @FXML Button menu;
     // Pila
     @FXML StackPane pozo;
 
@@ -56,6 +61,16 @@ public class SolitaireVisualGameController {
 
     @FXML
     private void initialize() throws IOException {
+        //Agregar Hover Botones.
+        hoverBoton(menu);
+        hoverBoton(newGame);
+
+        menu.setOnAction(e -> {
+           regrearAlMenu();
+        });
+        newGame.setOnAction(e -> {
+           reiniciarJuego();
+        });
         // Configurar VBoxes primero
         configurarVBoxes();
 
@@ -79,7 +94,7 @@ public class SolitaireVisualGameController {
         // Configurar todos los VBox de tableaus
         for (VBox vbox : new VBox[]{t1, t2, t3, t4, t5, t6, t7}) {
             vbox.setFillWidth(false);
-            vbox.setSpacing(-50); // Espaciado negativo para superponer cartas
+            vbox.setSpacing(-70); // Espaciado negativo para superponer cartas
         }
 
         for (VBox vbox : new VBox[]{f1, f2, f3, f4}) {
@@ -156,7 +171,26 @@ public class SolitaireVisualGameController {
         StackPane visibleCard = (StackPane) cartaStackPane.lookup("#VisibleCard");
 
 // Voltear la carta a boca arriba
+        cartaStackPane.setOnMouseEntered(null);
+        cartaStackPane.setOnMouseExited(null);
+
         if(!visibleCard.isVisible()) {
+            cartaStackPane.setOnMouseEntered(event -> {
+                        cartaStackPane.setStyle("-fx-background-color: #f0f0f0;" +
+                                "-fx-background-radius: 10;" +
+                                "-fx-border-color: #0066cc;" +
+                                "-fx-border-radius: 10;" +
+                                "-fx-border-width: 2;" +
+                                "-fx-effect: dropshadow(gaussian, #0066cc, 10, 0.5, 0, 0);");
+                    });
+            cartaStackPane.setOnMouseExited(event -> {
+                    cartaStackPane.setStyle("-fx-background-color: white;" +
+                            "-fx-background-radius: 10;" +
+                            "-fx-border-color: black;" +
+                            "-fx-border-radius: 10;" +
+                            "-fx-border-width: 1;" +
+                            "-fx-effect: null;");
+            });
             visibleCard.setVisible(true);
             cartaStackPane.setStyle(
                     "-fx-background-color: white;" +
@@ -303,6 +337,17 @@ public class SolitaireVisualGameController {
             }
         }
 
+    }
+
+
+    public void hoverBoton(Button boton) {
+        String estiloBoton = boton.getStyle();
+        boton.setOnMouseEntered(event -> {
+            boton.setStyle("-fx-background-color: #1a7cd4;");
+        });
+        boton.setOnMouseExited(event -> {
+            boton.setStyle(estiloBoton);
+        });
     }
 
 
@@ -695,7 +740,6 @@ public class SolitaireVisualGameController {
             pozo.getChildren().remove(carta);
 
             // Agregar a zona de descarte
-            zonaDescarte.getChildren().clear();
             zonaDescarte.getChildren().add(carta);
 
             try {
@@ -736,22 +780,26 @@ public class SolitaireVisualGameController {
 
     // Hover específico para cartas del pozo - NUEVO
     private void agregarHoverPozo(StackPane carta) {
-        carta.setOnMouseEntered(event -> {
-            carta.setStyle("-fx-background-color: #1a7cd4;" +
-                    "-fx-background-radius: 10;" +
-                    "-fx-border-color: #0066cc;" +
-                    "-fx-border-radius: 10;" +
-                    "-fx-border-width: 2;" +
-                    "-fx-effect: dropshadow(gaussian, #0066cc, 10, 0.5, 0, 0);");
-        });
+            carta.setOnMouseEntered(event -> {
+                carta.setStyle("-fx-background-color: #1a7cd4;" +
+                        "-fx-background-radius: 10;" +
+                        "-fx-border-color: #0066cc;" +
+                        "-fx-border-radius: 10;" +
+                        "-fx-border-width: 2;" +
+                        "-fx-effect: dropshadow(gaussian, #0066cc, 10, 0.5, 0, 0);");
+            });
 
-        carta.setOnMouseExited(event -> {
-            carta.setStyle("-fx-background-color: linear-gradient(to bottom, #1a6fc4, #0d4d8c);" +
-                    "-fx-background-radius: 10;" +
-                    "-fx-border-color: black;" +
-                    "-fx-border-radius: 10;" +
-                    "-fx-border-width: 1;");
-        });
+            carta.setOnMouseExited(event -> {
+                if (carta.isVisible()) {
+                    carta.setStyle("-fx-background-color: linear-gradient(to bottom, #1a6fc4, #0d4d8c);" +
+                            "-fx-background-radius: 10;" +
+                            "-fx-border-color: black;" +
+                            "-fx-border-radius: 10;" +
+                            "-fx-border-width: 1;");
+                }
+
+            });
+
     }
 
 
@@ -768,16 +816,28 @@ public class SolitaireVisualGameController {
 
     private void mostrarMensajeVictoria() {
         javafx.scene.control.Alert alert = new javafx.scene.control.Alert(
-                javafx.scene.control.Alert.AlertType.INFORMATION);
+                Alert.AlertType.CONFIRMATION);
         alert.setTitle("¡Felicitaciones!");
         alert.setHeaderText("¡Has ganado!");
         alert.setContentText("¡Completaste el Solitario exitosamente!\n¿Quieres jugar otra vez?");
 
         alert.showAndWait().ifPresent(response -> {
-            if (response == javafx.scene.control.ButtonType.OK) {
+            if (response == ButtonType.YES) {
                 reiniciarJuego();
             }
+            if (response == ButtonType.NO) {
+                regrearAlMenu();
+            }
         });
+    }
+
+    public void regrearAlMenu(){
+        manager = new SolitaireManager((Stage) t1.getScene().getWindow());
+        try {
+            manager.iniciarEscenaMenu();
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
 
