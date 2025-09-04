@@ -29,12 +29,8 @@ public class SolitaireMenuController {
         setupClickEvents();
 
         // Muestra el label jugar y salir respectivamente
-        if (playCard.getChildren().size() > 3) {
-            playCard.getChildren().get(3).setVisible(false);
-        }
-        if (exitCard.getChildren().size() > 3) {
-            exitCard.getChildren().get(3).setVisible(false);
-        }
+        playCard.getChildren().get(3).setVisible(false);
+        exitCard.getChildren().get(3).setVisible(false);
     }
 
     //Ayuda a gestionar los stage
@@ -43,7 +39,7 @@ public class SolitaireMenuController {
     }
 
 
-    //Genero los click events de los botones del menu.
+    //Genera los click events de los botones del menu.
     public void setupClickEvents() {
         playCard.setOnMouseClicked(e -> {
             try {

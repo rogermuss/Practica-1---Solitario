@@ -70,15 +70,7 @@ public class SolitaireVisualGameController {
            reiniciarJuego();
         });
 
-        //Impide que la ventana se redimensione
-        t1.sceneProperty().addListener((obs, oldScene, newScene) -> {
-            if (newScene != null) {
-                Stage stage = (Stage) newScene.getWindow();
-                if (stage != null) {
-                    stage.setResizable(false);
-                }
-            }
-        });
+
         // Configurar VBoxes primero
         configurarVBoxes();
 
@@ -287,7 +279,6 @@ public class SolitaireVisualGameController {
             }
         }
 
-        // LIMPIAR EL POZO PRIMERO - ESTA ES LA CLAVE
         pozo.getChildren().clear();
 
         for (StackPane carta : cartasGraficas) {
@@ -308,7 +299,6 @@ public class SolitaireVisualGameController {
                     visibleCard.setVisible(false); // Deben estar boca abajo en el pozo
                 }
 
-                // Remover event handlers de hover
                 carta.setOnMouseEntered(null);
                 carta.setOnMouseExited(null);
             }
@@ -737,48 +727,70 @@ public class SolitaireVisualGameController {
     //Permite configurar las acciones del pozo
     @FXML
     private void manejarClicPozo() {
+        int acum = 0;
+        ArrayList<StackPane> cartas = new ArrayList<>();
         if (!pozo.getChildren().isEmpty()) {
-            StackPane carta = (StackPane) pozo.getChildren().get(pozo.getChildren().size() - 1);
-
-            // Remover del pozo
-            pozo.getChildren().remove(carta);
-
-            // Agregar a zona de descarte
-            zonaDescarte.getChildren().add(carta);
-
-            try {
-                voltearCarta(carta);
-                configurarEventosCarta(carta);
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (pozo.getChildren().size() >= 3) {
+                for (int i = 0; i < pozo.getChildren().size(); i++) {
+                    if (acum <= 2) {
+                        cartas.add((StackPane) pozo.getChildren().get(i));
+                    }
+                    if (acum == 2) {
+                        break;
+                    }
+                    acum++;
+                }
+            }else{
+                for (int i = 0; i < pozo.getChildren().size(); i++) {
+                    cartas.add((StackPane) pozo.getChildren().get(i));
+                }
             }
 
-            // Actualizar hover del pozo
-            if (!pozo.getChildren().isEmpty()) {
-                StackPane nuevaUltima = (StackPane) pozo.getChildren().get(pozo.getChildren().size() - 1);
-                agregarHoverPozo(nuevaUltima);
+
+            for (StackPane carta : cartas) {
+                pozo.getChildren().remove(carta);
+
+                // Agregar a zona de descarte
+                zonaDescarte.getChildren().add(carta);
+
+                try {
+                    voltearCarta(carta);
+                    configurarEventosCarta(carta);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                // Actualizar hover del pozo
+                if (!pozo.getChildren().isEmpty()) {
+                    StackPane nuevaUltima = (StackPane) pozo.getChildren().get(pozo.getChildren().size() - 1);
+                    agregarHoverPozo(nuevaUltima);
+                }
             }
         } else {
             // Si el pozo está vacío, reciclar desde descarte
             reciclarDescarte();
         }
+
     }
 
     // Reciclar cartas del descarte al pozo
     private void reciclarDescarte() {
+        ArrayList<StackPane> cartas = new ArrayList<>();
         if (!zonaDescarte.getChildren().isEmpty()) {
-            // Mover la carta del descarte de vuelta al pozo
-            StackPane carta = (StackPane) zonaDescarte.getChildren().get(0);
-            zonaDescarte.getChildren().remove(carta);
-
-            try {
-                voltearCarta(carta);
-            } catch (IOException e) {
-                e.printStackTrace();
+            for (int i = 0; i < zonaDescarte.getChildren().size(); i++) {
+                cartas.add((StackPane) zonaDescarte.getChildren().get(i));
             }
+        }
+        for(StackPane carta : cartas) {
+                zonaDescarte.getChildren().remove(carta);
+                try {
+                    voltearCarta(carta);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-            pozo.getChildren().add(carta);
-            agregarHoverPozo(carta);
+                pozo.getChildren().add(carta);
+                agregarHoverPozo(carta);
         }
     }
 
